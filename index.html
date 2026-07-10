@@ -912,7 +912,7 @@
         // UPDATE STATUS HANDLER
         function updateStatus(kode, newStatus) {
             showToast("Mengubah status...", "info");
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
+            if(GAS_URL === "https://script.google.com/macros/s/AKfycbzuB8c5plsu5n32alyMg_y5bl7Selm5y2IHm1gHBcog6vtpCtzArdQS3kniESdzhZif9g/exec") {
                 let idx = appData.findIndex(d => d.kode === kode);
                 if(idx !== -1) appData[idx].status = newStatus;
                 localStorage.setItem('sanjaya_cache_appdata', JSON.stringify(appData));
