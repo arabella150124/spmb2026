@@ -722,7 +722,7 @@
     <!-- ================= JAVASCRIPT BUSINESS LOGIC ================= -->
     <script>
         // CONNECTIVITY BRIDGE (Ganti dengan URL GAS Web App Anda)
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbxoPL76br0q3jXekor1mMKdw7kXIjcUoDqVJZI4fwD-Rkwq4-kgktq6a4e4jzpfdJ43/exec"; 
+        const GAS_URL = "https://script.google.com/macros/s/AKfycby1KsBlYafehmdPTXdjlKpbTTuDSEfvWbX5T9XwBfkwMaMWHZf_ZvFXBDZD3DBjl129Ww/exec"; 
 
         // Global State
         let appData = [];
@@ -825,17 +825,35 @@
             updateStats3D();
         }
 
-        // Sync Real-Time server connection via Apps Script
-        async function fetchData() {
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL" || GAS_URL === "" || GAS_URL.includes("YOUR_DEPLOYED_GAS_WEB_APP_URL")) {
-                showToast("Berjalan dalam Demo Offline. Pasang GAS Web App untuk 2-way sync Google Sheet & RTDB.", "warning");
+        // JSONP JALUR KHUSUS BEBAS CORS (DOGET BYPASS)
+        function callGasJsonp(params, successCallback) {
+            if(GAS_URL === "https://script.google.com/macros/s/AKfycby1KsBlYafehmdPTXdjlKpbTTuDSEfvWbX5T9XwBfkwMaMWHZf_ZvFXBDZD3DBjl129Ww/exec" || GAS_URL === "") {
                 return;
             }
-            try {
-                let res = await fetch(`${GAS_URL}?action=getAll`);
-                if (!res.ok) throw new Error("Respons server tidak OK (Status: " + res.status + ")");
-                let json = await res.json();
-                if(json.status === "success") {
+            const callbackName = "gasCallback_" + Math.floor(Math.random() * 1000000);
+            window[callbackName] = function(response) {
+                if (successCallback) successCallback(response);
+                document.body.removeChild(script);
+                delete window[callbackName];
+            };
+
+            let queryString = Object.entries(params)
+                .map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+                .join('&');
+
+            const script = document.createElement("script");
+            script.src = `${GAS_URL}?${queryString}&callback=${callbackName}`;
+            script.onerror = function() {
+                console.warn("JSONP call failed. Berjalan dalam mode aman lokal.");
+                delete window[callbackName];
+            };
+            document.body.appendChild(script);
+        }
+
+        // Sync Real-Time server connection via JSONP
+        function fetchData() {
+            callGasJsonp({ action: "getAll" }, function(json) {
+                if(json && json.status === "success") {
                     appData = json.students || [];
                     if(json.config && Object.keys(json.config).length > 0) {
                         appConfig = json.config;
@@ -843,13 +861,14 @@
                     localStorage.setItem('sanjaya_ppdb_cache', JSON.stringify(appData));
                     localStorage.setItem('sanjaya_ppdb_config', JSON.stringify(appConfig));
                     applyAppUIBranding();
-                    updateMapCoordinates(); // Refresh map position if lat/lng changed
+                    updateMapCoordinates(); // Real-time pan map position
+                    if(currentRole !== "public") {
+                        renderAdminTable();
+                        renderQuotaFills();
+                        initChartsAndStats();
+                    }
                 }
-            } catch(err) {
-                console.warn("Koneksi ke Google Apps Script gagal/diblokir. Mengaktifkan Mode Offline / Cache Lokal secara otomatis.", err);
-                // Menjaga agar tampilan tetap terisi data cache lokal yang tersimpan
-                hydrateFromCache();
-            }
+            });
         }
 
         // Info Tabs Renderer
@@ -1320,7 +1339,7 @@
             });
         }
 
-        // Action Updates
+        // Action Updates via JSONP Callback
         function updateStatus(kode, newStatus) {
             showToast("Mengubah status...", "info");
             let verifikatorName = currentRole === 'admin' ? 'Administrator' : 'Panitia Pelaksana';
@@ -1338,12 +1357,17 @@
                 return;
             }
 
-            fetch(`${GAS_URL}?action=updateStatus&kode=${kode}&status=${newStatus}&verifikator=${verifikatorName}`)
-            .then(res => res.json())
-            .then(json => {
-                if(json.status === "success") {
+            callGasJsonp({
+                action: "updateStatus",
+                kode: kode,
+                status: newStatus,
+                verifikator: verifikatorName
+            }, function(json) {
+                if(json && json.status === "success") {
                     showToast("Status berhasil diupdate!", "success");
                     fetchData();
+                } else {
+                    showToast("Gagal memperbarui status di cloud.", "error");
                 }
             });
         }
@@ -1361,12 +1385,15 @@
                 return;
             }
 
-            fetch(`${GAS_URL}?action=delete&kode=${kode}`)
-            .then(res => res.json())
-            .then(json => {
-                if(json.status === "success") {
+            callGasJsonp({
+                action: "delete",
+                kode: kode
+            }, function(json) {
+                if(json && json.status === "success") {
                     showToast("Data pendaftar dihapus!", "success");
                     fetchData();
+                } else {
+                    showToast("Gagal menghapus data di cloud.", "error");
                 }
             });
         }
