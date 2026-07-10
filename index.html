@@ -513,7 +513,7 @@
                             </div>
                         </div>
 
-                        <!-- Graphics / Analysis (Visible to both Roles) -->
+                        <!-- Graphics / Analysis -->
                         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                             <h3 class="font-bold text-slate-900 mb-3"><i class="fa-solid fa-chart-pie text-cyan-600 mr-2"></i>Visualisasi Grafik Pendaftaran</h3>
                             <div class="relative w-full h-64">
@@ -522,7 +522,7 @@
                         </div>
                     </div>
 
-                    <!-- Right Column: Configurations (CMS - Restricted strictly to Admin Role) -->
+                    <!-- Right Column: Configurations (CMS) -->
                     <div class="lg:col-span-1 space-y-6">
                         <!-- CMS Config Card -->
                         <div id="admin-cms-panel" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hidden overflow-visible">
@@ -670,29 +670,6 @@
         </div>
     </footer>
 
-    <!-- MODAL: DETAIL JURUSAN POPUP -->
-    <div id="detail-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity no-print">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform transition-transform scale-95 duration-300">
-            <div class="relative h-48 sm:h-64 w-full bg-slate-100">
-                <img id="modal-img" src="" alt="Jurusan" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/20 text-white hover:bg-white/40 h-8 w-8 rounded-full flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="absolute bottom-4 left-6 right-6 text-white">
-                    <span id="modal-tag" class="bg-amber-400 text-slate-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Kompetensi</span>
-                    <h3 id="modal-title" class="text-xl sm:text-2xl font-black mt-2">Nama Jurusan</h3>
-                </div>
-            </div>
-            <div class="p-6 space-y-4">
-                <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Deskripsi Kompetensi</h4>
-                    <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed font-medium">Uraian deskripsi lengkap...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- PRINT SYSTEM OVERLAY -->
     <div id="print-area" class="hidden p-8 bg-white text-slate-900">
         <div class="flex items-center space-x-4 border-b-2 border-slate-800 pb-4 mb-6">
@@ -723,7 +700,7 @@
     <!-- ================= JAVASCRIPT BUSINESS LOGIC ================= -->
     <script>
         // CONNECTIVITY BRIDGE (Ganti dengan URL Apps Script Web App Baru Anda)
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbxN88sbvz0j_6K_SQGRVnXJk9xXFMnsD-AN7R1TPYQYG5lHUwJFe_4fmTXxX4AEpfhVEQ/exec"; 
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwcIkNER_cV2FDM6YqV9ue8ubhrKRr5JLeBJ6ocTc1oeWEwAQ_PeSd-527TYtfIPa8CGg/exec"; 
 
         // Global State
         let appData = [];
@@ -900,7 +877,7 @@
             });
         }
 
-        // Jurusan Cards Renderer (Ubah Ke Model List Accordion Tanpa Gambar)
+        // Jurusan Cards Renderer (Model List Accordion Tanpa Gambar)
         function renderJurusanCards() {
             const listDiv = document.getElementById('beranda-jurusan-list');
             listDiv.innerHTML = "";
@@ -911,13 +888,11 @@
                 let sisa = data.quota - registered;
                 if(sisa < 0) sisa = 0;
 
-                // Buat ID unik bebas karakter aneh untuk toggle id HTML
                 const safeId = name.replace(/[^a-zA-Z0-9]/g, "");
 
                 let accordionItem = document.createElement('div');
                 accordionItem.className = "bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-200 hover:border-blue-300";
                 accordionItem.innerHTML = `
-                    <!-- Accordion Trigger Button Header -->
                     <button onclick="toggleAccordion('${safeId}')" class="w-full flex items-center justify-between p-5 text-left focus:outline-none hover:bg-slate-50/50 transition-colors">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0">
                             <span class="text-base sm:text-lg font-extrabold text-slate-900">${name}</span>
@@ -933,7 +908,6 @@
                             <i id="icon-${safeId}" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
                         </div>
                     </button>
-                    <!-- Accordion Content Box (Tersembunyi secara default) -->
                     <div id="content-${safeId}" class="hidden border-t border-slate-100 bg-slate-50/40 p-6">
                         <div class="space-y-2">
                             <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Deskripsi Kompetensi Keahlian</h4>
@@ -945,7 +919,7 @@
             });
         }
 
-        // Fungsi Handler untuk Expand & Collapse Accordion Kompetensi Keahlian secara Berulang-ulang
+        // Accordion Toggle function
         function toggleAccordion(id) {
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
@@ -1174,7 +1148,6 @@
                         <p><b>Verifikator:</b> ${s.verifikator || '-'}</p>
                     </div>
 
-                    <!-- Steps visualizer -->
                     <div class="relative flex items-center justify-between mt-6">
                         <div class="absolute left-0 right-0 top-1/2 h-1 bg-slate-200 -translate-y-1/2 z-0"></div>
                         <div class="flex flex-col items-center z-10">
@@ -1238,7 +1211,7 @@
                 hp: document.getElementById('reg-hp').value
             };
 
-            // JSONP POST-Like Bypass: Mengirim Data Lewat URL Parameter Ter-encode yang Kebal CORS
+            // Kirim data registrasi baru secara aman
             callGasJsonp({
                 action: "registerJSONP",
                 data: JSON.stringify(payload)
@@ -1266,7 +1239,7 @@
                 currentRole = "admin";
                 document.getElementById('role-badge').innerText = "Administrator";
                 document.getElementById('role-badge').className = "bg-blue-600 text-white text-xs font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider";
-                document.getElementById('admin-cms-panel').classList.remove('hidden'); // Show CMS
+                document.getElementById('admin-cms-panel').classList.remove('hidden'); 
                 document.getElementById('nav-login-label').innerText = "Dashboard";
                 showToast("Login Admin Berhasil!", "success");
                 enterDashboard();
@@ -1274,7 +1247,7 @@
                 currentRole = "panitia";
                 document.getElementById('role-badge').innerText = "Panitia Verifikasi";
                 document.getElementById('role-badge').className = "bg-emerald-600 text-white text-xs font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider";
-                document.getElementById('admin-cms-panel').classList.add('hidden'); // Hide CMS
+                document.getElementById('admin-cms-panel').classList.add('hidden'); 
                 document.getElementById('nav-login-label').innerText = "Dashboard";
                 showToast("Login Panitia Berhasil!", "success");
                 enterDashboard();
@@ -1570,8 +1543,8 @@
             Swal.fire({
                 title: 'Tambah Agenda Baru',
                 html: `
-                    <input id="swal-agenda-title" class="swal2-input" placeholder="Nama Kegiatan (contoh: Tes Fisik)">
-                    <input id="swal-agenda-date" class="swal2-input" placeholder="Waktu Pelaksanaan (contoh: 12-14 Juli)">
+                    <input id="swal-agenda-title" class="swal2-input" placeholder="Nama Kegiatan">
+                    <input id="swal-agenda-date" class="swal2-input" placeholder="Waktu Pelaksanaan">
                 `,
                 confirmButtonText: 'Tambah',
                 showCancelButton: true,
@@ -1625,7 +1598,7 @@
             showToast("Kontak panitia dihapus. Klik Simpan Perubahan CMS untuk menyimpan.", "info");
         }
 
-        // Save CMS Configuration
+        // Save CMS Configuration (Aman Bebas CORS via JSONP GET)
         function saveCmsConfig() {
             if(currentRole !== 'admin') return;
 
@@ -1681,6 +1654,7 @@
                 if(appConfig.jurusan[name]) appConfig.jurusan[name].img = img;
             });
 
+            // Kirim request ke Google Apps Script via JSONP
             callGasJsonp({
                 action: "saveConfigJSONP",
                 data: JSON.stringify(appConfig)
@@ -1699,7 +1673,7 @@
                 title: 'Tambah Kompetensi Keahlian Baru',
                 html: `
                     <div class="text-left text-xs font-semibold space-y-2 p-2">
-                        <input id="swal-add-name" class="swal2-input m-0 w-full" placeholder="Nama Jurusan (contoh: DKV)">
+                        <input id="swal-add-name" class="swal2-input m-0 w-full" placeholder="Nama Jurusan">
                         <input id="swal-add-quota" type="number" class="swal2-input m-0 w-full" placeholder="Batas Kuota Siswa">
                         <input id="swal-add-img" class="swal2-input m-0 w-full" placeholder="Tautan Foto Jurusan Unsplash">
                         <textarea id="swal-add-desc" class="swal2-textarea m-0 w-full" placeholder="Uraian Singkat Kompetensi..."></textarea>
@@ -1750,20 +1724,6 @@
             appConfig.gallery.splice(idx, 1);
             populateCmsFields();
             showToast("Galeri terhapus. Klik tombol Simpan CMS untuk memperbarui.", "info");
-        }
-
-        function openJurusanModal(name) {
-            let j = appConfig.jurusan[name];
-            if(!j) return;
-            document.getElementById('modal-img').src = j.img;
-            document.getElementById('modal-title').innerText = name;
-            document.getElementById('modal-desc').innerText = j.desc;
-            document.getElementById('modal-tag').innerText = "Vokasi";
-            document.getElementById('detail-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('detail-modal').classList.add('hidden');
         }
 
         // Batch PDF Print
@@ -1845,7 +1805,6 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById(`tab-${tabId}`).classList.add('active');
 
-            // Reset active style for buttons
             const tabs = ['beranda', 'info', 'daftar', 'jurnal', 'cekstatus', 'login'];
             tabs.forEach(t => {
                 const btn = document.getElementById(`btn-tab-${t}`);
