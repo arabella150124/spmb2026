@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Leaflet CSS & JS -->
+    <!-- Leaflet CSS & JS (Lokasi Peta) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- SheetJS (Excel Exporter) -->
@@ -37,17 +37,19 @@
 </head>
 <body class="text-slate-800 antialiased overflow-x-hidden">
 
-    <!-- NAVBAR (Style matching image_720389.png precisely) -->
+    <!-- NAVBAR (Tampilan Persis Seperti image_365986.png) -->
     <header class="bg-[#1140c4] shadow-md sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Logo & Brand Sekolah -->
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('beranda')">
                     <div class="bg-white p-1 rounded-full shadow-md">
                         <img id="nav-logo" src="https://placehold.co/100x100/1140c4/ffffff?text=SANJAYA" alt="Logo" class="h-10 w-10 object-cover rounded-full">
                     </div>
                     <span class="text-white font-extrabold text-lg tracking-wide hidden sm:block" id="nav-title-sekolah">SMKS SANJAYA</span>
                 </div>
-                <!-- Navigation Tabs -->
+                
+                <!-- Navigasi Menu Nav Bar Sesuai image_365986.png -->
                 <div class="flex items-center space-x-1 sm:space-x-2 md:space-x-4">
                     <button onclick="switchTab('beranda')" id="btn-tab-beranda" class="text-white font-bold px-3 py-2 text-xs sm:text-sm transition-colors hover:text-slate-200">Beranda</button>
                     <button onclick="switchTab('info')" id="btn-tab-info" class="text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm bg-blue-700/80 shadow-inner transition-all hover:bg-blue-600">Info</button>
@@ -58,7 +60,7 @@
                     <button onclick="switchTab('cekstatus')" id="btn-tab-cekstatus" class="text-white font-bold px-3 py-2 text-xs sm:text-sm transition-colors hover:text-slate-200 flex items-center space-x-1">
                         <span>🔍</span> <span>Cek Status</span>
                     </button>
-                    <button onclick="switchTab('login')" id="btn-tab-login" class="bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-slate-800 transition-all flex items-center space-x-1 border border-slate-700">
+                    <button onclick="switchTab('login')" id="btn-tab-login" class="bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-slate-800 transition-all flex items-center space-x-1 border border-slate-700 shadow-sm">
                         <span class="text-amber-400">🔒</span> <span id="nav-login-label">Admin</span>
                     </button>
                 </div>
@@ -71,14 +73,14 @@
 
         <!-- ================= TAB: BERANDA ================= -->
         <section id="tab-beranda" class="tab-content active">
-            <!-- HERO BANNER (Full Width - Connected Edge-to-Edge matching image_727fcd.jpg) -->
+            <!-- HERO BANNER -->
             <div id="hero-banner" class="w-full bg-gradient-to-r from-blue-600 via-[#1140c4] to-indigo-700 text-white py-16 px-6 sm:px-12 text-center border-b-4 border-indigo-900 rounded-none shadow-lg">
                 <div class="max-w-4xl mx-auto">
                     <img id="hero-logo" src="https://placehold.co/150x150/ffffff/1140c4?text=LOGO" alt="Logo Sekolah" class="h-24 w-24 object-cover rounded-full mx-auto mb-4 border-4 border-white/30 shadow-xl bg-white">
                     <h1 id="hero-title" class="text-3xl md:text-5xl font-black tracking-tight mb-2">Penerimaan Murid Baru</h1>
                     <p id="hero-subtitle" class="text-xl md:text-2xl font-bold text-amber-400 mb-4">TAHUN AJARAN 2026/2027</p>
                     <p id="hero-desc" class="text-sm md:text-base text-slate-100 max-w-2xl mx-auto leading-relaxed font-medium">
-                        Mari bergabung bersama kami SMKS Sanjaya Bajawa, SMK yang memiliki komitmen membentuk Siswa-Siswi menjadi tenaga kerja vokasional yang unggul, berkarakter dan siap bersaing di DUDIKA (Dunia Usaha dan Dunia Industri Kerja).
+                        Mari bergabung bersama kami SMKS Sanjaya Bajawa, SMK yang memiliki komitmen membentuk Siswa-Siswi menjadi tenaga kerja vokasional yang unggul, berkarakter dan siap bersaing di DUDIKA.
                     </p>
                     <div class="mt-6 flex flex-wrap justify-center gap-3">
                         <button onclick="switchTab('daftar')" class="bg-[#fbbf24] text-slate-900 font-extrabold px-8 py-3 rounded-full text-sm sm:text-base shadow-xl hover:scale-105 transform transition-all tracking-wide">Mulai Mendaftar <i class="fa-solid fa-arrow-right ml-1"></i></button>
@@ -88,18 +90,18 @@
             </div>
 
             <!-- JURUSAN / KOMPETENSI KEAHLIAN UNGULAN SECTION -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-                <div class="text-center mb-10">
-                    <h2 class="text-2xl md:text-3xl font-black text-slate-900">Kompetensi Keahlian Unggulan</h2>
-                    <p class="text-sm text-slate-500 mt-1">Daftar program studi keahlian unggulan terakreditasi yang dapat dipilih</p>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-900">Kompetensi Keahlian Utama</h2>
+                    <p class="text-sm text-slate-500 mt-1">Klik pada nama program keahlian di bawah untuk membaca deskripsi lengkap</p>
                 </div>
 
-                <div id="beranda-jurusan-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards will be rendered dynamically -->
+                <div id="beranda-jurusan-list" class="space-y-3">
+                    <!-- List Accordion diproses dinamis oleh JS -->
                 </div>
             </div>
 
-            <!-- GALERI ALBUM KEGIATAN & VIDEO YOUTUBE/TIKTOK -->
+            <!-- GALERI ALBUM KEGIATAN & VIDEO -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
                 <div class="text-center mb-10">
                     <h2 class="text-2xl md:text-3xl font-black text-slate-900">Galeri Album & Kegiatan Sekolah</h2>
@@ -370,7 +372,7 @@
                         </div>
                     </div>
 
-                    <!-- FIXED CONTAINER TO STOP CLIPPING (Matching image_258c07.png) -->
+                    <!-- TABLE JURNAL -->
                     <div class="w-full overflow-x-auto custom-scrollbar border border-slate-100 rounded-xl">
                         <table class="w-full min-w-[950px] text-left border-collapse">
                             <thead>
@@ -657,14 +659,13 @@
         </div>
     </main>
 
-    <!-- FOOTER (Dynamic Text CMS) -->
+    <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-8 no-print text-center">
         <div class="max-w-7xl mx-auto px-4">
             <h4 class="font-bold text-white mb-2" id="footer-school-title">SMKS SANJAYA BAJAWA</h4>
             <p id="footer-school-desc" class="text-xs">Portal Penerimaan Murid Baru Terintegrasi Sistem Cloud Database</p>
             <div class="border-t border-slate-800 mt-4 pt-4 text-[10px]">
                 <p>&copy; 2026 Hak Cipta Dilindungi - SMKS Sanjaya Bajawa</p>
-                <p class="mt-1 text-slate-600">Dikembangkan oleh Sarjanasoft Web Builder System</p>
             </div>
         </div>
     </footer>
@@ -721,8 +722,8 @@
 
     <!-- ================= JAVASCRIPT BUSINESS LOGIC ================= -->
     <script>
-        // CONNECTIVITY BRIDGE (Ganti dengan URL GAS Web App Anda)
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwzJWpFBOF6flhevfjrMRcuJ5Bk-E3DFyFdFANgfvGsIcDgMUUkKWoBunaiunrS1bNoEw/exec"; 
+        // CONNECTIVITY BRIDGE (Ganti dengan URL Apps Script Web App Baru Anda)
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbw-m3pg3tQg_BidbHqhONiXyBu-m6ROZvHNC-hbFVDi-dqkkm67WSDEOzMmwNG2UxznXw/exec"; 
 
         // Global State
         let appData = [];
@@ -737,11 +738,11 @@
             logo: "",
             heroTitle: "Penerimaan Murid Baru",
             heroSubtitle: "TAHUN AJARAN 2026/2027",
-            heroDesc: "Mari bergabung bersama kami SMKS Sanjaya Bajawa, SMK yang memiliki komitmen membentuk Siswa-Siswi menjadi tenaga kerja vokasional yang unggul, berkarakter dan siap bersaing di DUDIKA (Dunia Usaha dan Dunia Industri Kerja).",
+            heroDesc: "Mari bergabung bersama kami SMKS Sanjaya Bajawa, SMK yang memiliki komitmen membentuk Siswa-Siswi menjadi tenaga kerja vokasional yang unggul, berkarakter dan siap bersaing di DUDIKA.",
             footerText: "SMKS SANJAYA BAJAWA - Portal Penerimaan Murid Baru Terintegrasi Sistem Cloud Database",
             mapDesc: "Temukan rute tercepat menuju lokasi pendaftaran fisik dan penyerahan berkas verifikasi di SMKS Sanjaya Bajawa.",
-            mapLat: "-8.6111", // Default Lintang (Latitude)
-            mapLng: "120.9632", // Default Bujur (Longitude)
+            mapLat: "-8.6111", // Default Latitude
+            mapLng: "120.9632", // Default Longitude
             syarat: [
                 "Mengisi formulir pendaftaran secara online.",
                 "Fotokopi Ijazah SD/MI (Legalisir).",
@@ -767,10 +768,7 @@
                 "Desain Komunikasi Visual (DKV)": { quota: 36, desc: "Mempelajari seni komunikasi grafis, fotografi, videografi, dan media digital.", img: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?w=400" },
                 "Teknik Komputer dan Jaringan (TKJ)": { quota: 72, desc: "Fokus mendalami arsitektur komputer, server, dan cyber security.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400" },
                 "Akuntansi dan Keuangan Lembaga (AKL)": { quota: 36, desc: "Mempelajari pembukuan keuangan, siklus akuntansi perpajakan, dan kas korporat.", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400" },
-                "Otomatisasi dan Tata Kelola Perkantoran (OTKP)": { quota: 72, desc: "Fokus pada korespondensi administrasi bisnis and kearsipan perkantoran.", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400" },
-                "Teknik Kendaraan Ringan Otomotif (TKRO)": { quota: 72, desc: "Pemeliharaan mesin mobil, sasis, kelistrikan bodi, dan EFI.", img: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=400" },
-                "Teknik Bisnis Sepeda Motor (TBSM)": { quota: 36, desc: "Pemeliharaan, diagnosis mesin dan kelistrikan sepeda motor.", img: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400" },
-                "Perhotelan": { quota: 36, desc: "Mempelajari tata hidang, tata graha, dan resepsionis berstandar internasional.", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400" }
+                "Otomatisasi dan Tata Kelola Perkantoran (OTKP)": { quota: 72, desc: "Fokus pada korespondensi administrasi bisnis and kearsipan perkantoran.", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400" }
             },
             gallery: [
                 { url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400", type: "photo" },
@@ -814,10 +812,7 @@
             document.getElementById('hero-logo').src = finalLogo;
             document.getElementById('print-logo').src = finalLogo;
 
-            // Info static blocks
             renderInfoLists();
-
-            // Dynamic Depts, Dropdowns & Gallery
             renderJurusanCards();
             populateJurusanDropdowns();
             renderGalleryMedia();
@@ -827,7 +822,7 @@
 
         // JSONP JALUR KHUSUS BEBAS CORS (DOGET BYPASS)
         function callGasJsonp(params, successCallback) {
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL" || GAS_URL === "") {
+            if(GAS_URL.includes("YOUR_DEPLOYED_GAS_WEB_APP_URL") || GAS_URL === "") {
                 return;
             }
             const callbackName = "gasCallback_" + Math.floor(Math.random() * 1000000);
@@ -873,14 +868,12 @@
 
         // Info Tabs Renderer
         function renderInfoLists() {
-            // Syarat List
             const syaratUl = document.getElementById('info-syarat-list');
             syaratUl.innerHTML = "";
             appConfig.syarat.forEach(s => {
                 syaratUl.innerHTML += `<li class="flex items-start space-x-2"><span class="text-emerald-500 font-bold">✓</span><span>${s}</span></li>`;
             });
 
-            // Agenda List
             const agendaDiv = document.getElementById('info-agenda-list');
             agendaDiv.innerHTML = "";
             appConfig.agenda.forEach(a => {
@@ -892,7 +885,6 @@
                 `;
             });
 
-            // Kontak List
             const kontakDiv = document.getElementById('info-kontak-list');
             kontakDiv.innerHTML = "";
             appConfig.kontak.forEach(k => {
@@ -908,7 +900,7 @@
             });
         }
 
-        // Jurusan Cards Renderer
+        // Jurusan Cards Renderer (Ubah Ke Model List Accordion Tanpa Gambar)
         function renderJurusanCards() {
             const listDiv = document.getElementById('beranda-jurusan-list');
             listDiv.innerHTML = "";
@@ -919,27 +911,56 @@
                 let sisa = data.quota - registered;
                 if(sisa < 0) sisa = 0;
 
-                let card = document.createElement('div');
-                card.className = "bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-1 relative group cursor-pointer";
-                card.onclick = () => openJurusanModal(name);
-                card.innerHTML = `
-                    <div class="h-44 relative bg-slate-100 overflow-hidden">
-                        <img src="${data.img}" alt="${name}" class="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute bottom-4 left-4 right-4 text-white">
-                            <span class="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Kuota: ${data.quota}</span>
-                            <h3 class="text-lg font-black mt-2 leading-tight">${name}</h3>
+                // Buat ID unik bebas karakter aneh untuk toggle id HTML
+                const safeId = name.replace(/[^a-zA-Z0-9]/g, "");
+
+                let accordionItem = document.createElement('div');
+                accordionItem.className = "bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-200 hover:border-blue-300";
+                accordionItem.innerHTML = `
+                    <!-- Accordion Trigger Button Header -->
+                    <button onclick="toggleAccordion('${safeId}')" class="w-full flex items-center justify-between p-5 text-left focus:outline-none hover:bg-slate-50/50 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0">
+                            <span class="text-base sm:text-lg font-extrabold text-slate-900">${name}</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Kuota: ${data.quota}</span>
+                                <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full">${registered} Pendaftar</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 pl-2">
+                            <span class="text-xs font-bold ${sisa === 0 ? 'text-red-600' : 'text-emerald-600'} hidden sm:inline-block">
+                                ${sisa === 0 ? 'Kuota Penuh' : sisa + ' Sisa Kursi'}
+                            </span>
+                            <i id="icon-${safeId}" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-200"></i>
+                        </div>
+                    </button>
+                    <!-- Accordion Content Box (Tersembunyi secara default) -->
+                    <div id="content-${safeId}" class="hidden border-t border-slate-100 bg-slate-50/40 p-6">
+                        <div class="space-y-2">
+                            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Deskripsi Kompetensi Keahlian</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed font-semibold">${data.desc || 'Informasi deskripsi detail program keahlian kompetensi ini belum dimasukkan oleh administrator.'}</p>
                         </div>
                     </div>
-                    <div class="p-4 flex items-center justify-between text-xs font-bold text-slate-500 bg-slate-50 border-t">
-                        <span class="flex items-center text-blue-600"><i class="fa-solid fa-user-graduate mr-1"></i> ${registered} Terdaftar</span>
-                        <span class="flex items-center ${sisa === 0 ? 'text-red-600' : 'text-emerald-600'}">
-                            <i class="fa-solid ${sisa === 0 ? 'fa-triangle-exclamation' : 'fa-circle-check'} mr-1"></i> ${sisa === 0 ? 'Kuota Penuh' : sisa + ' Sisa Kursi'}
-                        </span>
-                    </div>
                 `;
-                listDiv.appendChild(card);
+                listDiv.appendChild(accordionItem);
             });
+        }
+
+        // Fungsi Handler untuk Expand & Collapse Accordion Kompetensi Keahlian secara Berulang-ulang
+        function toggleAccordion(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                icon.classList.add('text-blue-600');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+                icon.classList.remove('text-blue-600');
+            }
         }
 
         // Dropdown populator for Jurusan selects
@@ -993,7 +1014,6 @@
                         </div>
                     `;
                 } else if(item.type === 'youtube') {
-                    // Extract Youtube embed ID
                     let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
                     let match = item.url.match(regExp);
                     let embedId = (match && match[2].length == 11) ? match[2] : null;
@@ -1024,13 +1044,11 @@
                     .bindPopup(`<b>${appConfig.namaSekolah}</b><br>Lokasi Pendaftaran Fisik.`)
                     .openPopup();
 
-                // Compute User geolocation to determine real distance
                 if(navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(pos => {
                         let userLat = pos.coords.latitude;
                         let userLng = pos.coords.longitude;
 
-                        // Add user marker
                         const userIcon = L.divIcon({
                             html: `<div class="bg-emerald-500 text-white p-2 rounded-full shadow-lg border-2 border-white animate-pulse"><i class="fa-solid fa-street-view"></i></div>`,
                             className: 'custom-div-icon',
@@ -1038,11 +1056,9 @@
                         });
                         L.marker([userLat, userLng], {icon: userIcon}).addTo(leafletMap).bindPopup("Lokasi Anda");
 
-                        // Routing Line
                         let routeLine = L.polyline([[userLat, userLng], targetCoords], {color: '#1140c4', weight: 4, dashArray: '8, 8'}).addTo(leafletMap);
                         leafletMap.fitBounds(routeLine.getBounds(), {padding: [50, 50]});
 
-                        // Calculate Distance
                         let dist = getHaversineDistance(userLat, userLng, targetCoords[0], targetCoords[1]);
                         document.getElementById('geo-distance-card').classList.remove('hidden');
                         document.getElementById('geo-distance-text').innerText = dist.toFixed(2) + " KM";
@@ -1070,9 +1086,8 @@
             } catch(e) { console.warn("Map update failure", e); }
         }
 
-        // Haversine Great-Circle distance formula
         function getHaversineDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Earth's radius in KM
+            const R = 6371; 
             let dLat = (lat2 - lat1) * Math.PI / 180;
             let dLon = (lon2 - lon1) * Math.PI / 180;
             let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -1100,7 +1115,7 @@
 
             filtered.forEach((d, idx) => {
                 let badgeClass = "bg-amber-100 text-amber-800 border-amber-200";
-                if(d.status === "Lolos Verifikasi") badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
+                if(d.status === "Lolos Verifikasi" || d.status === "Diterima") badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
                 if(d.status === "Ditolak") badgeClass = "bg-rose-100 text-rose-800 border-rose-200";
 
                 let tr = document.createElement('tr');
@@ -1143,10 +1158,9 @@
                 return;
             }
 
-            // Draw status tracing steps
             let step1 = "bg-emerald-500 text-white";
             let step2 = s.status !== "Menunggu Verifikasi" ? "bg-emerald-500 text-white" : "bg-slate-200 text-slate-500";
-            let step3 = s.status === "Lolos Verifikasi" ? "bg-emerald-500 text-white" : "bg-slate-200 text-slate-500";
+            let step3 = (s.status === "Lolos Verifikasi" || s.status === "Diterima") ? "bg-emerald-500 text-white" : "bg-slate-200 text-slate-500";
             if(s.status === "Ditolak") step3 = "bg-rose-500 text-white";
 
             box.innerHTML = `
@@ -1182,7 +1196,7 @@
             `;
         }
 
-        // Send Form submission securely to GSheet and RTDB via dynamic script tags injection
+        // Send Form submission securely to GSheet and RTDB
         function submitPendaftaran(e) {
             e.preventDefault();
 
@@ -1223,21 +1237,6 @@
                 hobi: document.getElementById('reg-hobi').value || "-",
                 hp: document.getElementById('reg-hp').value
             };
-
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
-                // Offline logic mock
-                payload.kode = "PPDB2026-" + Math.floor(100000 + Math.random() * 900000);
-                payload.tanggal = new Date().toLocaleString();
-                payload.status = "Menunggu Verifikasi";
-                payload.verifikator = "-";
-                appData.push(payload);
-                localStorage.setItem('sanjaya_ppdb_cache', JSON.stringify(appData));
-                Swal.fire({ icon: 'success', title: 'Berhasil (Demo)', text: `Siswa terdaftar dengan kode: ${payload.kode}` });
-                document.getElementById('form-pendaftaran').reset();
-                applyAppUIBranding();
-                switchTab('jurnal');
-                return;
-            }
 
             // JSONP POST-Like Bypass: Mengirim Data Lewat URL Parameter Ter-encode yang Kebal CORS
             callGasJsonp({
@@ -1293,7 +1292,6 @@
             populateCmsFields();
         }
 
-        // Logout session
         function logout() {
             currentRole = "public";
             document.getElementById('nav-login-label').innerText = "Admin";
@@ -1311,18 +1309,16 @@
 
             filtered.forEach((d, idx) => {
                 let badgeClass = "bg-amber-100 text-amber-800";
-                if(d.status === "Lolos Verifikasi") badgeClass = "bg-emerald-100 text-emerald-800";
+                if(d.status === "Lolos Verifikasi" || d.status === "Diterima") badgeClass = "bg-emerald-100 text-emerald-800";
                 if(d.status === "Ditolak") badgeClass = "bg-rose-100 text-rose-800";
 
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
                 
-                // Operations available
                 let opsHtml = `
                     <button onclick="updateStatus('${d.kode}', 'Lolos Verifikasi')" class="bg-emerald-500 text-white px-2 py-1 rounded hover:bg-emerald-600 text-[10px] font-bold">Lolos</button>
                     <button onclick="updateStatus('${d.kode}', 'Ditolak')" class="bg-rose-500 text-white px-2 py-1 rounded hover:bg-rose-600 text-[10px] font-bold">Tolak</button>
                 `;
-                // Admin exclusive: can delete
                 if(currentRole === 'admin') {
                     opsHtml += `
                         <button onclick="deleteRegistration('${d.kode}')" class="bg-slate-200 text-slate-700 px-2 py-1 rounded hover:bg-slate-300 text-[10px] font-bold"><i class="fa-solid fa-trash"></i></button>
@@ -1353,19 +1349,6 @@
             showToast("Mengubah status...", "info");
             let verifikatorName = currentRole === 'admin' ? 'Administrator' : 'Panitia Pelaksana';
             
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
-                let idx = appData.findIndex(d => d.kode === kode);
-                if(idx !== -1) {
-                    appData[idx].status = newStatus;
-                    appData[idx].verifikator = verifikatorName;
-                }
-                localStorage.setItem('sanjaya_ppdb_cache', JSON.stringify(appData));
-                renderAdminTable();
-                renderJurnalTable();
-                showToast("Berhasil diperbarui secara lokal.", "success");
-                return;
-            }
-
             callGasJsonp({
                 action: "updateStatus",
                 kode: kode,
@@ -1384,15 +1367,6 @@
         function deleteRegistration(kode) {
             if(!confirm("Yakin ingin menghapus permanen data ini dari database?")) return;
             showToast("Menghapus data...", "info");
-
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
-                appData = appData.filter(d => d.kode !== kode);
-                localStorage.setItem('sanjaya_ppdb_cache', JSON.stringify(appData));
-                renderAdminTable();
-                renderJurnalTable();
-                showToast("Data pendaftar terhapus.", "success");
-                return;
-            }
 
             callGasJsonp({
                 action: "delete",
@@ -1455,7 +1429,6 @@
                 if(pct >= 100) {
                     barColor = "bg-red-600 animate-pulse";
                     alertsCount++;
-                    // Render red alert notification cards
                     alertBox.innerHTML += `
                         <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-xl flex items-center justify-between text-xs text-red-800 font-bold">
                             <span>🚨 PERINGATAN: Kuota program studi keahlian "${name}" telah PENUH (${registered}/${max})!</span>
@@ -1492,11 +1465,9 @@
             document.getElementById('cfg-footer-text').value = appConfig.footerText;
             document.getElementById('cfg-map-desc').value = appConfig.mapDesc;
 
-            // Map Lintang & Bujur Inputs
             document.getElementById('cfg-map-lat').value = appConfig.mapLat || "-8.6111";
             document.getElementById('cfg-map-lng').value = appConfig.mapLng || "120.9632";
 
-            // Render Syarat CRUD list inside CMS
             const syaratListDiv = document.getElementById('cfg-syarat-list');
             syaratListDiv.innerHTML = "";
             appConfig.syarat.forEach((s, idx) => {
@@ -1508,7 +1479,6 @@
                 `;
             });
 
-            // Render Agenda CRUD list inside CMS
             const agendaListDiv = document.getElementById('cfg-agenda-list');
             agendaListDiv.innerHTML = "";
             appConfig.agenda.forEach((a, idx) => {
@@ -1526,7 +1496,6 @@
                 `;
             });
 
-            // Render Kontak CRUD list inside CMS
             const kontakListDiv = document.getElementById('cfg-kontak-list');
             kontakListDiv.innerHTML = "";
             appConfig.kontak.forEach((k, idx) => {
@@ -1544,7 +1513,6 @@
                 `;
             });
 
-            // Render Jurusan inside CMS list
             const list = document.getElementById('cfg-jurusan-list');
             list.innerHTML = "";
             Object.entries(appConfig.jurusan).forEach(([name, data]) => {
@@ -1562,7 +1530,6 @@
                 `;
             });
 
-            // Render Gallery Management list
             const gList = document.getElementById('cfg-gallery-manager-list');
             gList.innerHTML = "";
             appConfig.gallery.forEach((item, idx) => {
@@ -1658,7 +1625,7 @@
             showToast("Kontak panitia dihapus. Klik Simpan Perubahan CMS untuk menyimpan.", "info");
         }
 
-        // Save CMS Configuration (Menggunakan JSONP POST Bypass agar Logo Base64 bisa tersimpan dengan mulus)
+        // Save CMS Configuration
         function saveCmsConfig() {
             if(currentRole !== 'admin') return;
 
@@ -1669,7 +1636,6 @@
                 didOpen: () => Swal.showLoading()
             });
 
-            // Simple text configs
             appConfig.namaSekolah = document.getElementById('cfg-nama-sekolah').value || "SMKS SANJAYA BAJAWA";
             appConfig.logo = document.getElementById('cfg-logo-url').value;
             appConfig.heroTitle = document.getElementById('cfg-hero-title').value;
@@ -1678,17 +1644,14 @@
             appConfig.footerText = document.getElementById('cfg-footer-text').value;
             appConfig.mapDesc = document.getElementById('cfg-map-desc').value;
 
-            // Coordinates
             appConfig.mapLat = document.getElementById('cfg-map-lat').value || "-8.6111";
             appConfig.mapLng = document.getElementById('cfg-map-lng').value || "120.9632";
 
-            // Save dynamic Syarat edits from dynamic inputs
             document.querySelectorAll('#cfg-syarat-list input[data-syarat-idx]').forEach(input => {
                 let idx = parseInt(input.getAttribute('data-syarat-idx'));
                 appConfig.syarat[idx] = input.value;
             });
 
-            // Save dynamic Agenda edits from dynamic inputs
             document.querySelectorAll('#cfg-agenda-list input[data-agenda-title-idx]').forEach(input => {
                 let idx = parseInt(input.getAttribute('data-agenda-title-idx'));
                 appConfig.agenda[idx].title = input.value;
@@ -1698,7 +1661,6 @@
                 appConfig.agenda[idx].date = input.value;
             });
 
-            // Save dynamic Kontak edits from dynamic inputs
             document.querySelectorAll('#cfg-kontak-list input[data-kontak-nama-idx]').forEach(input => {
                 let idx = parseInt(input.getAttribute('data-kontak-nama-idx'));
                 appConfig.kontak[idx].nama = input.value;
@@ -1708,7 +1670,6 @@
                 appConfig.kontak[idx].hp = input.value;
             });
 
-            // Save dynamic quotas and image URLs
             document.querySelectorAll('#cfg-jurusan-list input[data-jur]').forEach(input => {
                 let name = input.getAttribute('data-jur');
                 let quota = parseInt(input.value) || 36;
@@ -1720,15 +1681,6 @@
                 if(appConfig.jurusan[name]) appConfig.jurusan[name].img = img;
             });
 
-            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
-                localStorage.setItem('sanjaya_ppdb_config', JSON.stringify(appConfig));
-                applyAppUIBranding();
-                updateMapCoordinates(); // Real-time pan map position locally
-                Swal.fire('Berhasil!', 'Konfigurasi tersimpan di browser lokal.', 'success');
-                return;
-            }
-
-            // Memanfaatkan JSONP Dynamic Script Injection untuk pengiriman data CMS dengan andal
             callGasJsonp({
                 action: "saveConfigJSONP",
                 data: JSON.stringify(appConfig)
@@ -1742,7 +1694,6 @@
             });
         }
 
-        // Dynamic ADD Department via admin CRUD
         function openAddJurusanModal() {
             Swal.fire({
                 title: 'Tambah Kompetensi Keahlian Baru',
@@ -1784,7 +1735,6 @@
             showToast("Jurusan dihapus. Klik tombol Simpan CMS untuk memperbarui.", "info");
         }
 
-        // Dynamic ADD / DELETE Gallery Media via admin CMS
         function addGalleryItem() {
             let url = document.getElementById('cfg-add-gallery-url').value.trim();
             let type = document.getElementById('cfg-add-gallery-type').value;
@@ -1802,7 +1752,6 @@
             showToast("Galeri terhapus. Klik tombol Simpan CMS untuk memperbarui.", "info");
         }
 
-        // Pop Up Jurusan detail
         function openJurusanModal(name) {
             let j = appConfig.jurusan[name];
             if(!j) return;
@@ -1817,7 +1766,7 @@
             document.getElementById('detail-modal').classList.add('hidden');
         }
 
-        // Batch PDF Print triggering
+        // Batch PDF Print
         function triggerPrintMode() {
             const body = document.getElementById('print-table-body');
             body.innerHTML = "";
@@ -1851,7 +1800,6 @@
                 return;
             }
 
-            // Map keys exactly as specified in the 23-column format
             let formatted = appData.map((d, index) => ({
                 "No": index + 1,
                 "Kode Pendaftaran": d.kode,
@@ -1886,7 +1834,6 @@
             showToast("Database diekspor ke Excel!", "success");
         }
 
-        // 3D Counter update helper
         function updateStats3D() {
             document.getElementById('stat-total-3d').innerText = appData.length;
             document.getElementById('stat-l-3d').innerText = appData.filter(d => d.jk === "L").length;
@@ -1898,6 +1845,33 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById(`tab-${tabId}`).classList.add('active');
 
+            // Reset active style for buttons
+            const tabs = ['beranda', 'info', 'daftar', 'jurnal', 'cekstatus', 'login'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`btn-tab-${t}`);
+                if (btn) {
+                    if (t === tabId) {
+                        if (t === 'daftar') {
+                            btn.className = "bg-amber-400 text-slate-900 font-black px-4 py-2 rounded-lg text-xs sm:text-sm shadow-sm";
+                        } else if (t === 'info') {
+                            btn.className = "text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm bg-blue-700/80 shadow-inner";
+                        } else {
+                            btn.className = "text-white font-bold px-3 py-2 text-xs sm:text-sm bg-blue-700/50 rounded-lg shadow-sm";
+                        }
+                    } else {
+                        if (t === 'daftar') {
+                            btn.className = "bg-[#fbbf24] text-slate-900 font-black px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-amber-400 transition-all shadow-sm";
+                        } else if (t === 'info') {
+                            btn.className = "text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-blue-600 transition-all";
+                        } else if (t === 'login') {
+                            btn.className = "bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-slate-800 transition-all flex items-center space-x-1 border border-slate-700";
+                        } else {
+                            btn.className = "text-white font-bold px-3 py-2 text-xs sm:text-sm transition-colors hover:text-slate-200";
+                        }
+                    }
+                }
+            });
+
             if(tabId === 'dashboard' && currentRole === 'public') {
                 switchTab('login');
                 return;
@@ -1905,7 +1879,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Simple Toast Notification
         function showToast(msg, type = "info") {
             Swal.fire({
                 toast: true,
@@ -1917,10 +1890,9 @@
             });
         }
 
-        // Simple Sanitizer against XSS
         function sanitizeHTML(str) {
             if(!str) return "";
-            return str.replace(/[&<>"']/g, function(m) {
+            return str.toString().replace(/[&<>"']/g, function(m) {
                 switch (m) {
                     case '&': return '&amp;';
                     case '<': return '&lt;';
