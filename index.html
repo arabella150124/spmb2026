@@ -722,7 +722,7 @@
     <!-- ================= JAVASCRIPT BUSINESS LOGIC ================= -->
     <script>
         // CONNECTIVITY BRIDGE (Ganti dengan URL GAS Web App Anda)
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbzmANvFcY1v1D4VnF9FKWHbgGzi60Yx4VktjvmXh_Ep2SkjkYI16WBaKfJWLMgr_hEPUQ/exec"; 
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwzJWpFBOF6flhevfjrMRcuJ5Bk-E3DFyFdFANgfvGsIcDgMUUkKWoBunaiunrS1bNoEw/exec"; 
 
         // Global State
         let appData = [];
@@ -1182,7 +1182,7 @@
             `;
         }
 
-        // Send Form submission securely to GSheet and RTDB
+        // Send Form submission securely to GSheet and RTDB via dynamic script tags injection
         function submitPendaftaran(e) {
             e.preventDefault();
 
@@ -1195,7 +1195,12 @@
                 return;
             }
 
-            showToast("Mengunggah formulir pendaftaran...", "info");
+            Swal.fire({
+                title: 'Mengirim Data...',
+                text: 'Harap tunggu sementara berkas disinkronkan ke Google Sheet & Cloud...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
 
             const payload = {
                 jurusan: targetJur,
@@ -1234,20 +1239,23 @@
                 return;
             }
 
-            fetch(GAS_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "register", data: payload })
-            })
-            .then(() => {
-                Swal.fire({ icon: 'success', title: 'Pendaftaran Berhasil!', text: 'Formulir Anda terkirim dan disinkronkan ke Google Sheets.' });
-                document.getElementById('form-pendaftaran').reset();
-                fetchData();
-                switchTab('jurnal');
-            })
-            .catch(err => {
-                showToast("Pengiriman data gagal, periksa internet Anda.", "error");
+            // JSONP POST-Like Bypass: Mengirim Data Lewat URL Parameter Ter-encode yang Kebal CORS
+            callGasJsonp({
+                action: "registerJSONP",
+                data: JSON.stringify(payload)
+            }, function(json) {
+                if(json && json.status === "success") {
+                    Swal.fire({ 
+                        icon: 'success', 
+                        title: 'Pendaftaran Berhasil!', 
+                        text: 'Selamat! Formulir Anda telah terkirim secara permanen ke Google Sheets & Database Cloud.' 
+                    });
+                    document.getElementById('form-pendaftaran').reset();
+                    fetchData();
+                    switchTab('jurnal');
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Gagal Menyimpan!', text: 'Terjadi kegagalan penulisan cloud. Periksa pengaturan GAS Anda.' });
+                }
             });
         }
 
@@ -1285,6 +1293,7 @@
             populateCmsFields();
         }
 
+        // Logout session
         function logout() {
             currentRole = "public";
             document.getElementById('nav-login-label').innerText = "Admin";
@@ -1649,9 +1658,16 @@
             showToast("Kontak panitia dihapus. Klik Simpan Perubahan CMS untuk menyimpan.", "info");
         }
 
-        // Save CMS Configuration
+        // Save CMS Configuration (Menggunakan JSONP POST Bypass agar Logo Base64 bisa tersimpan dengan mulus)
         function saveCmsConfig() {
             if(currentRole !== 'admin') return;
+
+            Swal.fire({
+                title: 'Menyimpan Konfigurasi...',
+                text: 'Sedang mensinkronkan pengaturan ke database cloud...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
 
             // Simple text configs
             appConfig.namaSekolah = document.getElementById('cfg-nama-sekolah').value || "SMKS SANJAYA BAJAWA";
@@ -1704,27 +1720,26 @@
                 if(appConfig.jurusan[name]) appConfig.jurusan[name].img = img;
             });
 
-            showToast("Menyimpan perubahan konfigurasi CMS...", "info");
-
             if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL") {
                 localStorage.setItem('sanjaya_ppdb_config', JSON.stringify(appConfig));
                 applyAppUIBranding();
                 updateMapCoordinates(); // Real-time pan map position locally
-                showToast("Konfigurasi tersimpan lokal.", "success");
+                Swal.fire('Berhasil!', 'Konfigurasi tersimpan di browser lokal.', 'success');
                 return;
             }
 
-            fetch(GAS_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "saveConfig", data: appConfig })
-            })
-            .then(() => {
-                Swal.fire({ icon: 'success', title: 'CMS Tersimpan!', text: 'Perubahan Anda telah disinkronkan ke cloud.' });
-                fetchData();
-            })
-            .catch(err => console.error(err));
+            // Memanfaatkan JSONP Dynamic Script Injection untuk pengiriman data CMS dengan andal
+            callGasJsonp({
+                action: "saveConfigJSONP",
+                data: JSON.stringify(appConfig)
+            }, function(json) {
+                if(json && json.status === "success") {
+                    Swal.fire({ icon: 'success', title: 'CMS Tersimpan!', text: 'Perubahan Anda telah disinkronkan ke cloud.' });
+                    fetchData();
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Gagal!', text: 'Gagal mengirim konfigurasi.' });
+                }
+            });
         }
 
         // Dynamic ADD Department via admin CRUD
