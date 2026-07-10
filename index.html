@@ -722,7 +722,7 @@
     <!-- ================= JAVASCRIPT BUSINESS LOGIC ================= -->
     <script>
         // CONNECTIVITY BRIDGE (Ganti dengan URL GAS Web App Anda)
-        const GAS_URL = "https://script.google.com/macros/s/AKfycby1KsBlYafehmdPTXdjlKpbTTuDSEfvWbX5T9XwBfkwMaMWHZf_ZvFXBDZD3DBjl129Ww/exec"; 
+        const GAS_URL = "YOUR_DEPLOYED_GAS_WEB_APP_URL"; 
 
         // Global State
         let appData = [];
@@ -827,7 +827,7 @@
 
         // JSONP JALUR KHUSUS BEBAS CORS (DOGET BYPASS)
         function callGasJsonp(params, successCallback) {
-            if(GAS_URL === "https://script.google.com/macros/s/AKfycby1KsBlYafehmdPTXdjlKpbTTuDSEfvWbX5T9XwBfkwMaMWHZf_ZvFXBDZD3DBjl129Ww/exec" || GAS_URL === "") {
+            if(GAS_URL === "YOUR_DEPLOYED_GAS_WEB_APP_URL" || GAS_URL === "") {
                 return;
             }
             const callbackName = "gasCallback_" + Math.floor(Math.random() * 1000000);
