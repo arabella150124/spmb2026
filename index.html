@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal PPDB & CMS Terintegrasi</title>
+  <title>Portal SPMB & CMS Terintegrasi</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -32,22 +32,22 @@
 
   <!-- TOP RUNNING TEXT, DATE, & CONTACT BAR -->
   <div class="bg-yellow-500 text-blue-950 text-xs py-2 px-4 shadow-inner flex flex-col md:flex-row justify-between items-center gap-2 font-bold relative z-50">
-    <!-- Hari & Tanggal Otomatis -->
+    <!-- Hari, Tanggal & Waktu Real-Time Berjalan -->
     <div class="flex items-center space-x-2">
-      <i class="fa-solid fa-calendar-day"></i>
-      <span id="current-datetime">Memuat tanggal...</span>
+      <i class="fa-solid fa-clock"></i>
+      <span id="current-datetime" class="font-mono">Memuat penanggalan & waktu...</span>
     </div>
     
-    <!-- Running Text Berjalan -->
+    <!-- Running Text Berjalan (Diedit Dinamis lewat CMS Admin) -->
     <div class="flex-1 max-w-xl overflow-hidden relative mx-4 hidden md:block">
       <div class="animate-marquee hover:cursor-pointer">
-        📢 <span id="running-text-content">Informasi PPDB Online SMK Unggulan Prestasi Tahun Ajaran 2026/2027 Resmi Dibuka! Segera Daftarkan Diri Anda Sebelum Kuota Terpenuhi!</span>
+        📢 <span id="running-text-content">Memuat informasi pengumuman terbaru SPMB...</span>
       </div>
     </div>
 
     <!-- Kontak Cepat Panitia -->
     <div class="flex items-center space-x-3 text-[11px]">
-      <span class="bg-blue-900 text-white px-2 py-0.5 rounded text-[10px] uppercase">Layanan PPDB</span>
+      <span class="bg-blue-900 text-white px-2 py-0.5 rounded text-[10px] uppercase">Layanan SPMB</span>
       <a href="https://wa.me/628123456789" target="_blank" class="flex items-center space-x-1 hover:text-blue-900 transition text-blue-950">
         <i class="fa-brands fa-whatsapp text-sm text-green-800"></i>
         <span>0812-3456-789 (WhatsApp)</span>
@@ -64,7 +64,7 @@
         </div>
         <div>
           <h1 id="nav-school-name" class="font-bold text-lg leading-tight">SMK Unggulan Prestasi</h1>
-          <p class="text-xs text-blue-200">Portal Penerimaan Peserta Didik Baru</p>
+          <p class="text-xs text-blue-200">Portal Seleksi Penerimaan Mahasiswa Baru</p>
         </div>
       </div>
       <nav class="flex space-x-1 mt-2 md:mt-0">
@@ -78,14 +78,14 @@
     </div>
   </header>
 
-  <!-- LOADING OVERLAY (Hanya Aktif Saat Submit Form/Config) -->
+  <!-- LOADING OVERLAY -->
   <div id="loading-overlay" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center text-white">
     <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500 mb-4"></div>
     <h3 id="loading-title" class="text-xl font-bold">Memuat Data...</h3>
-    <p id="loading-text" class="text-sm text-slate-300 mt-1">Sedang mengambil data dari database cloud...</p>
+    <p id="loading-text" class="text-sm text-slate-300 mt-1">Sedang menyinkronkan data...</p>
   </div>
 
-  <!-- FLOATING CLOUD SYNC STATE (Sinyal Sinkronisasi Latar Belakang) -->
+  <!-- FLOATING CLOUD SYNC STATE -->
   <div id="cloud-sync-status" class="fixed bottom-4 right-4 bg-slate-900/90 text-white text-xs px-3.5 py-2 rounded-xl shadow-2xl flex items-center space-x-2 transition-all duration-300 opacity-0 scale-90 translate-y-4 pointer-events-none z-50">
     <span class="flex h-2 w-2 relative">
       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -97,9 +97,7 @@
   <!-- CUSTOM MODERN MODAL ALERT -->
   <div id="custom-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl transform transition-all text-center">
-      <div id="modal-icon-container" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-4">
-        <!-- Icon injected here -->
-      </div>
+      <div id="modal-icon-container" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-4"></div>
       <h3 id="modal-title" class="text-xl font-bold text-slate-800"></h3>
       <p id="modal-message" class="text-slate-600 mt-2 text-sm leading-relaxed"></p>
       <div id="modal-details" class="mt-3 p-2 bg-slate-100 rounded text-left text-xs font-mono text-slate-700 hidden max-h-32 overflow-y-auto"></div>
@@ -114,10 +112,10 @@
     <section id="tab-beranda" class="tab-content space-y-8">
       <!-- Hero Banner -->
       <div class="relative bg-gradient-to-r from-blue-900 to-blue-700 rounded-3xl overflow-hidden shadow-xl text-white p-8 md:p-16 flex flex-col justify-center min-h-[350px]">
-        <div class="absolute right-0 bottom-0 opacity-10 text-[200px] pointer-events-none font-bold">PPDB</div>
+        <div class="absolute right-0 bottom-0 opacity-10 text-[200px] pointer-events-none font-bold">SPMB</div>
         <div class="max-w-2xl relative z-10 space-y-4">
-          <span class="bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">Pendaftaran Dibuka</span>
-          <h2 id="hero-title" class="text-3xl md:text-5xl font-extrabold leading-tight">Selamat Datang di Portal PPDB Online</h2>
+          <span class="bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">Pendaftaran SPMB Dibuka</span>
+          <h2 id="hero-title" class="text-3xl md:text-5xl font-extrabold leading-tight">Selamat Datang di Portal SPMB Online</h2>
           <p id="hero-desc" class="text-slate-200 text-lg">Mulai kesuksesan masa depan Anda bersama kami melalui pendidikan vokasi berkualitas, fasilitas modern, dan pengajar profesional.</p>
           <div class="pt-4 flex flex-wrap gap-3">
             <button onclick="switchTab('daftar')" class="bg-yellow-500 hover:bg-yellow-600 text-blue-950 font-bold px-6 py-3 rounded-xl transition shadow-lg">Daftar Sekarang <i class="fa-solid fa-arrow-right ml-2"></i></button>
@@ -146,16 +144,16 @@
           <div class="bg-purple-100 text-purple-600 p-4 rounded-xl text-2xl"><i class="fa-solid fa-clock"></i></div>
           <div>
             <h4 class="text-slate-500 text-sm font-medium">Status Gelombang</h4>
-            <p id="stat-wave" class="text-2xl font-bold text-slate-800 font-mono">Gelombang I</p>
+            <p id="stat-wave" class="text-2xl font-bold text-slate-800">Gelombang I</p>
           </div>
         </div>
       </div>
 
-      <!-- Live Majors / Jurusan (Accordion Tanpa Gambar) -->
+      <!-- Live Majors / Jurusan Accordion -->
       <div>
-        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center"><i class="fa-solid fa-layer-group text-blue-600 mr-2"></i> Kompetensi Keahlian (Program Studi)</h3>
+        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center"><i class="fa-solid fa-layer-group text-blue-600 mr-2"></i> Kompetensi Keahlian (Program Keahlian)</h3>
         <div id="majors-list-container" class="max-w-4xl mx-auto space-y-4">
-          <!-- Diisi secara dinamis dengan accordion tanpa gambar -->
+          <!-- Dinamis Accordion dari CMS -->
         </div>
       </div>
 
@@ -168,13 +166,11 @@
       </div>
     </section>
 
-    <!-- TAB 2: INFO & LAYANAN KONTAK -->
+    <!-- TAB 2: INFO -->
     <section id="tab-info" class="tab-content hidden max-w-4xl mx-auto space-y-8">
-      
-      <!-- Syarat & Alur -->
       <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-8">
         <div class="text-center">
-          <h2 class="text-3xl font-extrabold text-slate-800">Alur & Syarat Pendaftaran</h2>
+          <h2 class="text-3xl font-extrabold text-slate-800">Alur & Syarat Seleksi</h2>
           <p class="text-slate-500 mt-2">Pahami langkah mudah mendaftar sebagai calon peserta didik baru secara online</p>
         </div>
         
@@ -183,7 +179,7 @@
             <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0 mt-1">1</div>
             <div>
               <h4 class="font-bold text-slate-800 text-lg">Isi Formulir Online</h4>
-              <p class="text-slate-600 text-sm">Masuk ke menu <span class="font-semibold text-blue-600">Daftar</span>, lengkapi formulir pendaftaran dengan data diri, nilai, dan jurusan pilihan Anda secara akurat.</p>
+              <p class="text-slate-600 text-sm">Masuk ke menu <span class="font-semibold text-blue-600">Daftar</span>, lengkapi formulir pendaftaran dengan data diri, hobi, dan jurusan pilihan Anda secara akurat.</p>
             </div>
           </div>
           <div class="flex items-start space-x-4">
@@ -197,7 +193,7 @@
             <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0 mt-1">3</div>
             <div>
               <h4 class="font-bold text-slate-800 text-lg">Verifikasi Berkas & Pengumuman</h4>
-              <p class="text-slate-600 text-sm">Panitia akan memverifikasi berkas Anda. Pantau kelulusan Anda di menu <span class="font-semibold text-blue-600">Cek Status</span> atau tanyakan langsung pada admin.</p>
+              <p class="text-slate-600 text-sm">Panitia akan memverifikasi berkas Anda. Pantau kelulusan Anda di menu <span class="font-semibold text-blue-600">Cek Status</span> atau hubungi kontak panitia resmi.</p>
             </div>
           </div>
         </div>
@@ -213,9 +209,9 @@
         </div>
       </div>
 
-      <!-- PANEL KONTAK UTAMA PANITIA PPDB -->
-      <div class="bg-gradient-to-r from-blue-850 to-blue-700 text-white p-8 rounded-3xl shadow-lg border border-blue-900">
-        <h3 class="text-xl font-bold flex items-center mb-4"><i class="fa-solid fa-headset mr-2 text-yellow-400"></i> Hubungi Layanan & Layanan Panitia PPDB</h3>
+      <!-- PANEL KONTAK UTAMA PANITIA SPMB -->
+      <div class="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-8 rounded-3xl shadow-lg border border-blue-900">
+        <h3 class="text-xl font-bold flex items-center mb-4"><i class="fa-solid fa-headset mr-2 text-yellow-400"></i> Hubungi Layanan & Layanan Panitia SPMB</h3>
         <p class="text-blue-100 text-sm mb-6 leading-relaxed">Jika Anda mengalami kendala saat melakukan pendaftaran online, memerlukan panduan fisik, atau ingin berkonsultasi mengenai pemilihan kompetensi keahlian, silakan hubungi kontak panitia resmi berikut:</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -223,7 +219,7 @@
           <div class="bg-white/10 p-5 rounded-2xl border border-white/20 flex flex-col justify-between">
             <div>
               <span class="bg-green-500 text-white px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase inline-block mb-3">Layanan Cepat</span>
-              <h4 class="font-bold text-lg">Sekretariat PPDB Online</h4>
+              <h4 class="font-bold text-lg">Sekretariat SPMB Online</h4>
               <p class="text-xs text-blue-200 mt-1">Jam Operasional: Senin - Sabtu (08.00 - 14.00 WITA)</p>
             </div>
             <a href="https://wa.me/628123456789" target="_blank" class="mt-6 bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-xl font-bold text-center text-sm transition shadow-md flex items-center justify-center space-x-2">
@@ -248,10 +244,10 @@
       </div>
     </section>
 
-    <!-- TAB 3: DAFTAR FORM -->
+    <!-- TAB 3: DAFTAR FORM (Email dihapus ganti Hobi, Katolik Teratas) -->
     <section id="tab-daftar" class="tab-content hidden max-w-3xl mx-auto bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
       <div class="mb-6">
-        <h2 class="text-2xl font-extrabold text-slate-800">Formulir Pendaftaran Siswa Baru</h2>
+        <h2 class="text-2xl font-extrabold text-slate-800">Formulir Pendaftaran Siswa Baru (SPMB)</h2>
         <p class="text-slate-500 text-sm">Harap isi data di bawah ini dengan benar sesuai dokumen resmi Anda</p>
       </div>
 
@@ -298,26 +294,27 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Agama</label>
-            <select id="reg-agama" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Agama (Katolik Teratas)</label>
+            <select id="reg-agama" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition font-semibold">
+              <option value="Katolik">Katolik</option>
               <option value="Islam">Islam</option>
               <option value="Kristen">Kristen</option>
-              <option value="Katolik">Katolik</option>
               <option value="Hindu">Hindu</option>
               <option value="Buddha">Buddha</option>
               <option value="Konghucu">Konghucu</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Email Aktif</label>
-            <input type="email" id="reg-email" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+            <!-- Email Aktif dihapus total, digantikan dengan kolom Hobi -->
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Hobi Siswa</label>
+            <input type="text" id="reg-hobi" required placeholder="Contoh: Olahraga, Musik, Membaca, dll" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Pilihan Jurusan</label>
-            <select id="reg-jurusan" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+            <select id="reg-jurusan" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition font-semibold">
               <!-- Dinamis sesuai data jurusan -->
             </select>
           </div>
@@ -343,7 +340,7 @@
           </div>
         </div>
 
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg mt-4">Kirim Pendaftaran <i class="fa-solid fa-paper-plane ml-2"></i></button>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg mt-4">Kirim Pendaftaran SPMB <i class="fa-solid fa-paper-plane ml-2"></i></button>
       </form>
     </section>
 
@@ -351,7 +348,7 @@
     <section id="tab-jurnal" class="tab-content hidden space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 class="text-2xl font-bold text-slate-800">Jurnal Sementara Calon Siswa</h2>
+          <h2 class="text-2xl font-bold text-slate-800">Jurnal Sementara Calon Siswa (SPMB)</h2>
           <p class="text-slate-500 text-sm">Daftar nama pendaftar yang masuk ke sistem secara real-time</p>
         </div>
         <div class="flex space-x-2">
@@ -386,7 +383,7 @@
     <section id="tab-status" class="tab-content hidden max-w-lg mx-auto bg-white p-8 rounded-3xl shadow-sm border border-slate-100 text-center space-y-6">
       <div>
         <div class="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-magnifying-glass"></i></div>
-        <h2 class="text-2xl font-bold text-slate-800">Cek Hasil Kelulusan / Seleksi</h2>
+        <h2 class="text-2xl font-bold text-slate-800">Cek Hasil Seleksi SPMB</h2>
         <p class="text-slate-500 text-sm mt-1">Masukkan Nomor NISN atau Kode Registrasi Anda</p>
       </div>
 
@@ -404,7 +401,7 @@
     <!-- TAB 6: ADMIN CMS PANEL -->
     <section id="tab-admin" class="tab-content hidden space-y-8">
       
-      <!-- Box Login Admin -->
+      <!-- Box Login Admin (Jika belum login) -->
       <div id="admin-login-box" class="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-4">
         <div class="text-center">
           <h2 class="text-2xl font-bold text-slate-800">Login Administrator</h2>
@@ -420,13 +417,13 @@
       <div id="admin-dashboard" class="hidden space-y-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-3xl font-extrabold text-slate-900">Dashboard Control Panel</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900">Dashboard Control Panel SPMB</h2>
             <p class="text-slate-500 text-sm">Kelola pengaturan publik website dan verifikasi status pendaftar secara live</p>
           </div>
           <button onclick="adminLogout()" class="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-xl transition text-sm">Log Out</button>
         </div>
 
-        <!-- DIAGNOSTIC SYSTEM HUB (CRUCIAL UNTUK TEST KONEKSI!) -->
+        <!-- DIAGNOSTIC SYSTEM HUB -->
         <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 space-y-4">
           <div class="flex items-center space-x-3">
             <span class="bg-yellow-500 text-yellow-950 w-8 h-8 rounded-full flex items-center justify-center text-lg"><i class="fa-solid fa-triangle-exclamation"></i></span>
@@ -444,9 +441,7 @@
               <button onclick="diagnoseGasConnection()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-xl text-xs font-bold flex-1"><i class="fa-solid fa-stethoscope mr-1"></i> Uji Koneksi</button>
             </div>
           </div>
-          <div id="diagnostic-results" class="hidden p-4 bg-slate-800 text-green-400 font-mono text-xs rounded-xl overflow-x-auto max-h-40">
-            <!-- Log output diagnosa -->
-          </div>
+          <div id="diagnostic-results" class="hidden p-4 bg-slate-800 text-green-400 font-mono text-xs rounded-xl overflow-x-auto max-h-40"></div>
         </div>
 
         <!-- Quick Admin Stats -->
@@ -475,7 +470,7 @@
           <!-- Column 1 & 2: Main Website Settings -->
           <div class="lg:col-span-2 space-y-8">
             
-            <!-- CMS CONFIGURATION FORM -->
+            <!-- CMS CONFIGURATION FORM (RUNNING TEXT DITAMBAHKAN DI SINI) -->
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-6">
               <h3 class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3"><i class="fa-solid fa-sliders text-blue-600 mr-2"></i> Pengaturan Konten Web Utama (CMS)</h3>
               
@@ -495,10 +490,16 @@
                 <textarea id="cms-hero-desc" rows="3" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition"></textarea>
               </div>
 
+              <!-- BARU: EDIT RUNNING TEXT MASUK CRUD ADMIN -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Teks Pengumuman Berjalan (Running Text)</label>
+                <input type="text" id="cms-running-text" placeholder="Masukkan pengumuman penting yang akan muncul di bar atas..." class="w-full px-4 py-3 bg-slate-50 border border-slate-250 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition font-semibold">
+              </div>
+
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Gelombang Aktif</label>
-                  <select id="cms-wave" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition">
+                  <select id="cms-wave" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition font-semibold">
                     <option value="Gelombang I">Gelombang I</option>
                     <option value="Gelombang II">Gelombang II</option>
                     <option value="Gelombang III">Gelombang III</option>
@@ -507,7 +508,7 @@
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Status Pendaftaran Website</label>
-                  <select id="cms-status" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition">
+                  <select id="cms-status" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 text-sm focus:outline-none transition font-semibold">
                     <option value="open">DIBUKA (Aktif Menerima Pendaftaran)</option>
                     <option value="closed">DITUTUP (Menonaktifkan Formulir)</option>
                   </select>
@@ -526,9 +527,7 @@
                 <button onclick="addNewMajorRow()" class="bg-green-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold hover:bg-green-700 transition">+ Tambah Jurusan</button>
               </div>
               
-              <div id="admin-majors-list" class="space-y-4">
-                <!-- Row Jurusan Di-generate di sini -->
-              </div>
+              <div id="admin-majors-list" class="space-y-4"></div>
             </div>
 
           </div>
@@ -541,9 +540,7 @@
                 <button onclick="addNewGalleryRow()" class="bg-green-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold hover:bg-green-700 transition">+ Tambah</button>
               </div>
 
-              <div id="admin-gallery-list" class="space-y-3">
-                <!-- Dinamis Gambar Galeri -->
-              </div>
+              <div id="admin-gallery-list" class="space-y-3"></div>
             </div>
           </div>
 
@@ -566,14 +563,13 @@
                   <th class="px-4 py-3">Nama Lengkap</th>
                   <th class="px-4 py-3">NISN</th>
                   <th class="px-4 py-3">Telepon</th>
+                  <th class="px-4 py-3">Hobi</th>
                   <th class="px-4 py-3">Pilihan Jurusan</th>
                   <th class="px-4 py-3">Status Seleksi</th>
                   <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
               </thead>
-              <tbody id="admin-student-rows" class="text-sm divide-y divide-slate-100">
-                <!-- Dinamis -->
-              </tbody>
+              <tbody id="admin-student-rows" class="text-sm divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
@@ -586,20 +582,19 @@
   <footer class="bg-slate-900 text-slate-400 py-8 mt-16 border-t border-slate-800 text-center text-sm">
     <div class="max-w-7xl mx-auto px-4 space-y-2">
       <p class="font-bold text-white" id="footer-school-name">SMK Unggulan Prestasi</p>
-      <p>&copy; 2026 PPDB Online. All Rights Reserved.</p>
+      <p>&copy; 2026 SPMB Online. All Rights Reserved.</p>
     </div>
   </footer>
 
   <!-- ================= SCRIPT UTAMA & LOGIKA INSTANT LOAD ================= -->
   <script>
-    /* STREAMING_CHUNK: Menginisialisasi sistem memori lokal (cache) dan pengaturan default PPDB */
-    // 1. STATE SYSTEM (DATA IN-MEMORY GLOBAL & CACHE LOCAL STORAGE)
     let CONFIG = {
       schoolName: "SMK Unggulan Prestasi",
-      heroTitle: "Selamat Datang di Portal PPDB Online",
+      heroTitle: "Selamat Datang di Portal SPMB Online",
       heroDesc: "Mulai kesuksesan masa depan Anda bersama kami melalui pendidikan vokasi berkualitas, fasilitas modern, dan pengajar profesional.",
       wave: "Gelombang I",
       status: "open",
+      runningText: "Pendaftaran Seleksi Penerimaan Mahasiswa Baru (SPMB) SMK Unggulan Prestasi Tahun Ajaran 2026/2027 Resmi Dibuka!",
       majors: [
         { code: "DKV", name: "Desain Komunikasi Visual", quota: 36, desc: "Mempelajari desain grafis, ilustrasi digital, videografi, fotografi, pembuatan animasi 2D/3D, dan seni komunikasi visual digital." },
         { code: "TKJ", name: "Teknik Komputer & Jaringan", quota: 72, desc: "Fokus pada keahlian perakitan komputer, instalasi jaringan LAN/WAN, administrasi server Linux & Windows, keamanan sistem cyber, dan fiber optik." },
@@ -613,21 +608,20 @@
     };
 
     let STUDENTS = [];
-    let GAS_URL = localStorage.getItem("GAS_URL") || "https://script.google.com/macros/s/AKfycbzC-4lDspRxJloko8PWeqYag0SInNWRv0FVo2j5YtTrVSsEiYSvCuamtQv2mfEt57I/exec";
+    let GAS_URL = localStorage.getItem("GAS_URL") || "https://script.google.com/macros/s/AKfycbyxaJyeIKzrlfpMTaasPXiiPVOWw8FP-QhrWSYuhe9zF5Po4-q5fghRElt9uJjn45ludQ/exec";
 
-    // 2. BOOTSTRAP INITIAL LOADING (Membaca Cache Instan - Sangat Cepat)
     window.onload = function() {
-      // Ambil dan jalankan tanggal otomatis hari ini
+      // Menjalankan jam penanggalan yang berdetik setiap detik
       updateDateTime();
-      setInterval(updateDateTime, 60000); // Update setiap 1 menit
+      setInterval(updateDateTime, 1000); 
 
       if (GAS_URL) {
         document.getElementById("admin-gas-url").value = GAS_URL;
       }
 
-      // Ambil data cache browser lokal untuk dimuat instan (< 0.1 Detik)
-      const cachedConfig = localStorage.getItem("PPDB_CONFIG");
-      const cachedStudents = localStorage.getItem("PPDB_STUDENTS");
+      // Membaca caching lokal instan
+      const cachedConfig = localStorage.getItem("SPMB_CONFIG");
+      const cachedStudents = localStorage.getItem("SPMB_STUDENTS");
 
       if (cachedConfig) {
         try { CONFIG = JSON.parse(cachedConfig); } catch(e) {}
@@ -636,17 +630,13 @@
         try { STUDENTS = JSON.parse(cachedStudents); } catch(e) {}
       }
 
-      // Render data cache ke layar terlebih dahulu agar tidak loading lama
       renderCmsToDom();
 
-      // Jalankan proses pencocokan cloud secara tenang di latar belakang (Quiet Sync)
       if (GAS_URL) {
         syncDataQuietly();
       }
     };
 
-    /* STREAMING_CHUNK: Mengatur fungsi penanggalan otomatis dan sistem sinyal sinkronisasi */
-    // 3. WIDGET TANGGAL OTOMATIS (INDONESIA)
     function updateDateTime() {
       const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
       const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -657,15 +647,17 @@
       const monthName = months[now.getMonth()];
       const year = now.getFullYear();
       
-      const formatted = `${dayName}, ${date} ${monthName} ${year}`;
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      const formatted = `${dayName}, ${date} ${monthName} ${year} - ${hours}:${minutes}:${seconds} WITA`;
       document.getElementById("current-datetime").textContent = formatted;
     }
 
-    // 4. FLOATING TOAST SYNC STATUS
-    function showSyncStatus(message, isSuccess = true) {
+    function showSyncStatus(message) {
       const el = document.getElementById("cloud-sync-status");
       const text = document.getElementById("cloud-sync-text");
-      
       text.textContent = message;
       el.classList.remove("opacity-0", "scale-90", "translate-y-4");
       el.classList.add("opacity-100", "scale-100", "translate-y-0");
@@ -673,56 +665,46 @@
       setTimeout(() => {
         el.classList.remove("opacity-100", "scale-100", "translate-y-0");
         el.classList.add("opacity-0", "scale-90", "translate-y-4");
-      }, 3500);
+      }, 3000);
     }
 
-    // 5. SINKRONISASI LATAR BELAKANG (Quiet Sync - Solusi Pengurangan Loading Lama)
     function syncDataQuietly() {
       if (!GAS_URL) return;
 
-      // Nyalakan sinyal sinkronisasi di latar belakang
       callGasJsonp("getConfig", null, function(response) {
         if (response.status === "success" && response.data) {
-          // Update data in-memory
           if (response.data.schoolName) CONFIG.schoolName = response.data.schoolName;
           if (response.data.heroTitle) CONFIG.heroTitle = response.data.heroTitle;
           if (response.data.heroDesc) CONFIG.heroDesc = response.data.heroDesc;
           if (response.data.wave) CONFIG.wave = response.data.wave;
           if (response.data.status) CONFIG.status = response.data.status;
+          if (response.data.runningText) CONFIG.runningText = response.data.runningText;
           if (response.data.majors) CONFIG.majors = response.data.majors;
           if (response.data.gallery) CONFIG.gallery = response.data.gallery;
 
-          // Simpan ke cache browser
-          localStorage.setItem("PPDB_CONFIG", JSON.stringify(CONFIG));
+          localStorage.setItem("SPMB_CONFIG", JSON.stringify(CONFIG));
         }
 
-        // Ambil data pendaftar baru secara asinkron
         callGasJsonp("getStudents", null, function(studResponse) {
           if (studResponse.status === "success" && studResponse.data) {
             STUDENTS = studResponse.data;
-            localStorage.setItem("PPDB_STUDENTS", JSON.stringify(STUDENTS));
+            localStorage.setItem("SPMB_STUDENTS", JSON.stringify(STUDENTS));
           }
-          
-          // Render data paling segar ke layar
           renderCmsToDom();
-          showSyncStatus("Database sinkron dengan Google Sheets");
+          showSyncStatus("Sinkronisasi SPMB Cloud Selesai");
         });
       });
     }
 
-    /* STREAMING_CHUNK: Merender tampilan accordion jurusan, data pendaftar, dan menyusun kontrol UI */
-    // 6. RENDERING SYSTEM
     function renderCmsToDom() {
-      // Nav & Header
       document.getElementById("nav-school-name").textContent = CONFIG.schoolName;
       document.getElementById("footer-school-name").textContent = CONFIG.schoolName;
       document.getElementById("hero-title").textContent = CONFIG.heroTitle;
       document.getElementById("hero-desc").textContent = CONFIG.heroDesc;
       document.getElementById("stat-wave").textContent = CONFIG.wave;
 
-      // Update Running Text Bar secara dinamis
-      const runTxt = `📢 Pendaftaran Online ${CONFIG.schoolName} saat ini ${CONFIG.status === 'open' ? 'DIBUKA' : 'DITUTUP'} untuk ${CONFIG.wave}. Segera daftarkan diri Anda sebelum kuota penuh!`;
-      document.getElementById("running-text-content").textContent = runTxt;
+      // Update Teks Berjalan langsung dari Setting CONFIG CMS
+      document.getElementById("running-text-content").textContent = CONFIG.runningText || "Selamat Datang di Portal SPMB.";
 
       // Stats
       const verifiedCount = STUDENTS.filter(s => s.status === "Diterima" || s.status === "Verified").length;
@@ -733,10 +715,9 @@
       const percentage = totalQuota > 0 ? Math.round((STUDENTS.length / totalQuota) * 100) : 0;
       document.getElementById("stat-quota-percent").textContent = percentage + "%";
 
-      // Majors Grid Accordion Tanpa Gambar (Sesuai Permintaan)
+      // Accordion Majoring List (Tanpa Gambar)
       const accordionContainer = document.getElementById("majors-list-container");
       accordionContainer.innerHTML = "";
-      
       CONFIG.majors.forEach((major, idx) => {
         const countInMajor = STUDENTS.filter(s => s.jurusan === major.name).length;
         const defaultDesc = major.desc || `Kompetensi keahlian unggulan di bidang industri digital kreatif dengan prospek kerja yang sangat luas.`;
@@ -763,14 +744,12 @@
         `;
       });
 
-      // Populate Option di Form Daftar
       const regJurusan = document.getElementById("reg-jurusan");
       regJurusan.innerHTML = "";
       CONFIG.majors.forEach(m => {
         regJurusan.innerHTML += `<option value="${m.name}">${m.name} (${m.code})</option>`;
       });
 
-      // Gallery Grid
       const galleryGrid = document.getElementById("gallery-grid");
       galleryGrid.innerHTML = "";
       CONFIG.gallery.forEach(img => {
@@ -786,27 +765,24 @@
         `;
       });
 
-      // Render Jurnal Table
       renderJurnalTable();
 
-      // Render CMS Form Admin Inputs
+      // Form Control Set Value
       document.getElementById("cms-school-name").value = CONFIG.schoolName;
       document.getElementById("cms-hero-title").value = CONFIG.heroTitle;
       document.getElementById("cms-hero-desc").value = CONFIG.heroDesc;
+      document.getElementById("cms-running-text").value = CONFIG.runningText || "";
       document.getElementById("cms-wave").value = CONFIG.wave;
       document.getElementById("cms-status").value = CONFIG.status;
 
-      // Render Admin Lists
       renderAdminMajors();
       renderAdminGallery();
       renderAdminStudentTable();
     }
 
-    // Toggle Accordion Program Studi
     function toggleAccordion(id) {
       const content = document.getElementById("content-" + id);
       const icon = document.getElementById("icon-" + id);
-      
       if (content.classList.contains("hidden")) {
         content.classList.remove("hidden");
         icon.classList.add("rotate-180");
@@ -820,7 +796,7 @@
       const tbody = document.getElementById("jurnal-table-body");
       tbody.innerHTML = "";
       if (STUDENTS.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-400">Belum ada siswa terdaftar.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-400">Belum ada siswa terdaftar di database.</td></tr>`;
         return;
       }
       STUDENTS.forEach((s, idx) => {
@@ -856,12 +832,10 @@
       document.getElementById("loading-overlay").classList.add("hidden");
     }
 
-    /* STREAMING_CHUNK: Mengamankan alur submit pendaftaran dan status verifikasi */
-    // 7. REGISTRATION SUBMIT HANDLER
     function handleRegistration(event) {
       event.preventDefault();
       if (CONFIG.status === "closed") {
-        showModal("Pendaftaran Ditutup", "Mohon maaf, pendaftaran telah resmi ditutup oleh pihak sekolah.", "error");
+        showModal("Pendaftaran Ditutup", "Mohon maaf, pendaftaran SPMB telah ditutup sementara.", "error");
         return;
       }
 
@@ -876,7 +850,7 @@
         tanggal_lahir: document.getElementById("reg-tanggal-lahir").value,
         jenis_kelamin: document.getElementById("reg-jk").value,
         agama: document.getElementById("reg-agama").value,
-        email: document.getElementById("reg-email").value,
+        hobi: document.getElementById("reg-hobi").value, // Column Hobi
         jurusan: document.getElementById("reg-jurusan").value,
         asal_sekolah: document.getElementById("reg-asal-sekolah").value,
         alamat: document.getElementById("reg-alamat").value,
@@ -885,41 +859,36 @@
         status: "Pending"
       };
 
-      showLoading("Mengirim Pendaftaran...", "Data sedang dikirimkan ke database cloud kami...");
+      showLoading("Mengirim Pendaftaran...", "Data sedang dikirimkan ke database cloud...");
 
       if (!GAS_URL) {
-        // Simulasi Offline lokal jika belum ada link
         STUDENTS.push(studentData);
-        localStorage.setItem("PPDB_STUDENTS", JSON.stringify(STUDENTS));
+        localStorage.setItem("SPMB_STUDENTS", JSON.stringify(STUDENTS));
         hideLoading();
-        showModal("Pendaftaran Sukses! (Mode Offline)", `Selamat, pendaftaran berhasil disimpan secara lokal.\nKODE REGISTRASI: ${randomId}`, "success");
+        showModal("Pendaftaran Sukses! (Offline)", `Data disimpan lokal.\nKODE REGISTRASI: ${randomId}`, "success");
         document.getElementById("student-reg-form").reset();
         renderCmsToDom();
         return;
       }
 
-      // Kirim via POST aman tanpa preflight OPTIONS
       fetch(GAS_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({ action: "addStudent", data: studentData })
       }).then(() => {
-        // Tambahkan ke array lokal untuk respons instan
         STUDENTS.push(studentData);
-        localStorage.setItem("PPDB_STUDENTS", JSON.stringify(STUDENTS));
-        
+        localStorage.setItem("SPMB_STUDENTS", JSON.stringify(STUDENTS));
         hideLoading();
-        showModal("Pendaftaran Berhasil!", `Formulir Anda telah dikirim.\nKODE REGISTRASI ANDA: ${randomId}\nSimpan kode ini baik-baik!`, "success");
+        showModal("Pendaftaran Berhasil!", `Formulir Anda telah dikirim.\nKODE REGISTRASI: ${randomId}`, "success");
         document.getElementById("student-reg-form").reset();
-        syncDataQuietly(); // Sinkron ulang tenang di belakang layar
+        syncDataQuietly();
       }).catch(err => {
         hideLoading();
-        showModal("Gagal Mengirim", "Koneksi ke database sedang sibuk. Silakan coba beberapa saat lagi.", "error", err.toString());
+        showModal("Gagal Mengirim", "Koneksi sedang padat. Silakan coba lagi.", "error", err.toString());
       });
     }
 
-    // 8. CHECK REGISTRATION STATUS
     function checkStudentStatus() {
       const searchVal = document.getElementById("status-search-id").value.trim().toUpperCase();
       if (!searchVal) {
@@ -946,8 +915,8 @@
             <div class="text-center space-y-2">
               <span class="inline-block bg-green-500 text-white rounded-full px-4 py-1 text-sm font-bold">LULUS / DITERIMA</span>
               <h4 class="font-bold text-xl mt-3 text-green-800">Selamat, ${match.nama}!</h4>
-              <p class="text-sm">Anda dinyatakan <b class="text-green-700">DITERIMA</b> pada kompetensi keahlian <b>${match.jurusan}</b>.</p>
-              <p class="text-xs text-slate-500 mt-2">Segera siapkan berkas persyaratan fisik dan hubungi sekretariat sekolah untuk daftar ulang fisik.</p>
+              <p class="text-sm">Anda dinyatakan <b class="text-green-700">DITERIMA</b> pada program studi <b>${match.jurusan}</b>.</p>
+              <p class="text-xs text-slate-500 mt-2">Hubungi sekretariat sekolah untuk daftar ulang fisik.</p>
             </div>
           `;
         } else if (match.status === "Cadangan") {
@@ -956,8 +925,7 @@
             <div class="text-center space-y-2">
               <span class="inline-block bg-blue-500 text-white rounded-full px-4 py-1 text-sm font-bold">STATUS: CADANGAN</span>
               <h4 class="font-bold text-xl mt-3 text-blue-800">Halo, ${match.nama}</h4>
-              <p class="text-sm">Anda saat ini masuk dalam kuota <b class="text-blue-700">CADANGAN</b> untuk jurusan <b>${match.jurusan}</b>.</p>
-              <p class="text-xs text-slate-500 mt-2">Tetap pantau halaman ini untuk melihat perubahan seleksi.</p>
+              <p class="text-sm">Anda masuk dalam kuota <b class="text-blue-700">CADANGAN</b> untuk jurusan <b>${match.jurusan}</b>.</p>
             </div>
           `;
         } else if (match.status === "Ditolak") {
@@ -966,7 +934,7 @@
             <div class="text-center space-y-2">
               <span class="inline-block bg-red-500 text-white rounded-full px-4 py-1 text-sm font-bold">TIDAK DITERIMA</span>
               <h4 class="font-bold text-xl mt-3 text-red-800">Mohon Maaf, ${match.nama}</h4>
-              <p class="text-sm text-red-700">Berkas Anda belum memenuhi syarat pendaftaran gelombang ini.</p>
+              <p class="text-sm text-red-700">Berkas Anda belum memenuhi syarat pendaftaran.</p>
             </div>
           `;
         } else {
@@ -975,7 +943,7 @@
             <div class="text-center space-y-2">
               <span class="inline-block bg-amber-500 text-white rounded-full px-4 py-1 text-sm font-bold">PROSES VERIFIKASI</span>
               <h4 class="font-bold text-xl mt-3 text-amber-800">Berkas Sedang Diperiksa</h4>
-              <p class="text-sm">Halo ${match.nama}, berkas formulir Anda sedang dalam tahap antrean pengecekan panitia.</p>
+              <p class="text-sm">Berkas formulir Anda sedang dalam tahap antrean pengecekan panitia.</p>
             </div>
           `;
         }
@@ -986,6 +954,7 @@
           <div class="border-t border-slate-200/50 pt-4 text-xs space-y-1">
             <p><b>Nama Siswa:</b> ${match.nama}</p>
             <p><b>Asal Sekolah:</b> ${match.asal_sekolah}</p>
+            <p><b>Hobi Siswa:</b> ${match.hobi || '-'}</p>
             <p><b>Pilihan Jurusan:</b> ${match.jurusan}</p>
           </div>
         `;
@@ -994,21 +963,19 @@
         resultBox.innerHTML = `
           <i class="fa-solid fa-circle-exclamation text-3xl text-red-500 mb-2"></i>
           <h4 class="font-bold">Siswa Tidak Ditemukan</h4>
-          <p class="text-sm mt-1">Kode Registrasi atau Nomor NISN "<b>${searchVal}</b>" tidak terdaftar di sistem kami.</p>
+          <p class="text-sm mt-1">Kode atau NISN "<b>${searchVal}</b>" tidak terdaftar di sistem SPMB kami.</p>
         `;
       }
     }
 
-    /* STREAMING_CHUNK: Menyusun logika admin, kelola database siswa, verifikasi dan CMS */
-    // 9. ADMIN & CMS LOGIC
     function tryAdminLogin() {
       const pass = document.getElementById("admin-pass").value;
-      if (pass === "admin123" || pass === "admin") {
+      if (pass === "admin123" || pass === "admin" || pass === "sarjanasoft") {
         document.getElementById("admin-login-box").classList.add("hidden");
         document.getElementById("admin-dashboard").classList.remove("hidden");
         renderCmsToDom();
       } else {
-        showModal("Gagal Login", "Kata sandi yang Anda masukkan salah!", "error");
+        showModal("Gagal Login", "Kata sandi salah!", "error");
       }
     }
 
@@ -1021,12 +988,12 @@
     function saveGasUrlOnly() {
       const url = document.getElementById("admin-gas-url").value.trim();
       if (!url) {
-        showModal("URL Kosong", "Harap masukkan URL Web App Apps Script yang sah.", "info");
+        showModal("URL Kosong", "Harap masukkan URL Web App yang sah.", "info");
         return;
       }
       GAS_URL = url;
       localStorage.setItem("GAS_URL", url);
-      showModal("Disimpan", "URL Web App Apps Script berhasil disimpan secara lokal.", "success");
+      showModal("Disimpan", "URL Web App berhasil disimpan secara lokal.", "success");
       syncDataQuietly();
     }
 
@@ -1037,45 +1004,42 @@
       logs.innerHTML = `<span class="text-blue-300">[Diagnosa]</span> Memulai pengetesan koneksi ke: ${urlInput.substring(0, 45)}...\n`;
 
       if (!urlInput) {
-        logs.innerHTML += `<span class="text-red-400">[ERROR]</span> URL Kosong! Harap masukkan URL Web App.\n`;
+        logs.innerHTML += `<span class="text-red-400">[ERROR]</span> URL Kosong!\n`;
         return;
       }
 
       GAS_URL = urlInput;
       localStorage.setItem("GAS_URL", urlInput);
-
-      logs.innerHTML += `<span class="text-blue-300">[Diagnosa]</span> Mengirimkan sinyal uji coba via JSONP...\n`;
       
       callGasJsonp("testConnection", null, function(response) {
         if (response && response.status === "success") {
           logs.innerHTML += `<span class="text-green-400">[SUKSES]</span> Sinyal Balik Diterima! Respon: "${response.message}"\n`;
           logs.innerHTML += `<span class="text-green-400">[STATUS]</span> Terhubung Sempurna dengan Google Sheets!`;
-          showModal("Uji Sukses", "Sistem Anda terhubung 100% tanpa hambatan dengan Google Sheets!", "success");
+          showModal("Uji Sukses", "Sistem Anda terhubung 100% dengan Google Sheets!", "success");
         } else {
           logs.innerHTML += `<span class="text-red-400">[GAGAL]</span> Sinyal dikirim namun tidak merespons.\n`;
-          logs.innerHTML += `<span class="text-red-400">[SOLUSI]</span> Pastikan Anda sudah mengklik 'Terapkan (Deploy)' > 'Penerapan Baru (New Deployment)' di Google Apps Script dan setel Akses ke 'Siapa saja (Anyone)'.`;
           showModal("Gagal Konek", "Aplikasi tidak mengembalikan respon valid.", "error");
         }
       });
     }
 
-    // CMS SAVE CHANGES
     function saveCmsChanges() {
       if (!GAS_URL) {
-        showModal("Mode Offline", "Anda belum memasang URL Apps Script. Konfigurasi hanya tersimpan di browser Anda saat ini.", "info");
+        showModal("Mode Offline", "Konfigurasi hanya tersimpan di browser Anda saat ini.", "info");
         return;
       }
 
-      showLoading("Menyimpan Konfigurasi...", "Sedang mensinkronkan pengaturan ke database cloud...");
+      showLoading("Menyimpan Konfigurasi...", "Sedang menyinkronkan pengaturan ke database cloud...");
 
       // Update CONFIG data dari input form
       CONFIG.schoolName = document.getElementById("cms-school-name").value;
       CONFIG.heroTitle = document.getElementById("cms-hero-title").value;
       CONFIG.heroDesc = document.getElementById("cms-hero-desc").value;
+      CONFIG.runningText = document.getElementById("cms-running-text").value; // Mengambil data Teks Berjalan
       CONFIG.wave = document.getElementById("cms-wave").value;
       CONFIG.status = document.getElementById("cms-status").value;
 
-      // Update Majors dari UI
+      // Update Majors
       const majorCards = document.querySelectorAll(".admin-major-card");
       CONFIG.majors = [];
       majorCards.forEach(card => {
@@ -1086,7 +1050,7 @@
         });
       });
 
-      // Update Gallery dari UI
+      // Update Gallery
       const galleryCards = document.querySelectorAll(".admin-gallery-card");
       CONFIG.gallery = [];
       galleryCards.forEach(card => {
@@ -1096,10 +1060,8 @@
         });
       });
 
-      // Simpan ke Cache Lokal dulu agar instan
-      localStorage.setItem("PPDB_CONFIG", JSON.stringify(CONFIG));
+      localStorage.setItem("SPMB_CONFIG", JSON.stringify(CONFIG));
 
-      // Kirim ke Cloud via POST murni (Bypass CORS)
       const payload = {
         action: "saveConfig",
         data: CONFIG
@@ -1113,26 +1075,24 @@
       })
       .then(() => {
         hideLoading();
-        showModal("Berhasil Disimpan!", "Selamat! Konfigurasi CMS berhasil disimpan di Google Sheets Anda.", "success");
+        showModal("Berhasil Disimpan!", "Konfigurasi CMS berhasil disimpan di Google Sheets Anda.", "success");
         renderCmsToDom();
         syncDataQuietly();
       })
       .catch(err => {
-        // Fallback jika POST ditolak keras
         const encodedData = encodeURIComponent(JSON.stringify(CONFIG));
         callGasJsonp("saveConfigJSONP", { data: encodedData }, function(response) {
           hideLoading();
           if (response && response.status === "success") {
-            showModal("Sukses (Jalur Cadangan)", "Konfigurasi disimpan via jalur transmisi data cadangan.", "success");
+            showModal("Sukses", "Konfigurasi disimpan via jalur cadangan.", "success");
             renderCmsToDom();
           } else {
-            showModal("Gagal Menyimpan", "Sistem gagal mengirimkan konfigurasi. Silakan jalankan Uji Koneksi.", "error", err.toString());
+            showModal("Gagal Menyimpan", "Sistem gagal mengirimkan konfigurasi.", "error", err.toString());
           }
         });
       });
     }
 
-    // 10. JURUSAN & GALERI DYNAMIC ROW GENERATOR
     function renderAdminMajors() {
       const container = document.getElementById("admin-majors-list");
       container.innerHTML = "";
@@ -1207,7 +1167,6 @@
       container.appendChild(div);
     }
 
-    // 11. STUDENT DATABASE MANAGEMENT (ADMIN TABLE)
     function renderAdminStudentTable() {
       const tbody = document.getElementById("admin-student-rows");
       tbody.innerHTML = "";
@@ -1223,7 +1182,7 @@
       document.getElementById("adm-stat-rejected").textContent = rej;
 
       if (STUDENTS.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-400 text-xs">Belum ada berkas terdaftar di Google Sheets.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-400 text-xs">Belum ada berkas terdaftar di Google Sheets.</td></tr>`;
         return;
       }
 
@@ -1234,6 +1193,7 @@
             <td class="px-4 py-3 font-semibold text-slate-800">${s.nama}</td>
             <td class="px-4 py-3 font-mono text-xs">${s.nisn}</td>
             <td class="px-4 py-3 text-xs">${s.telepon}</td>
+            <td class="px-4 py-3 text-xs font-bold text-blue-600">${s.hobi || '-'}</td>
             <td class="px-4 py-3 text-xs">${s.jurusan}</td>
             <td class="px-4 py-3">
               <select onchange="updateStudentStatus('${sid}', this.value)" class="bg-slate-50 border border-slate-200 rounded p-1 text-xs font-semibold text-slate-700">
@@ -1256,7 +1216,7 @@
       if (!match) return;
 
       match.status = newStatus;
-      localStorage.setItem("PPDB_STUDENTS", JSON.stringify(STUDENTS));
+      localStorage.setItem("SPMB_STUDENTS", JSON.stringify(STUDENTS));
       
       if (!GAS_URL) {
         showModal("Berhasil (Offline)", "Status siswa berhasil diubah secara lokal.", "success");
@@ -1292,7 +1252,7 @@
       if (!confirm("Apakah Anda yakin ingin menghapus data siswa ini secara permanen dari database?")) return;
 
       STUDENTS = STUDENTS.filter(s => (s.id && s.id.toString() !== id.toString()) && (s.kode && s.kode.toString() !== id.toString()));
-      localStorage.setItem("PPDB_STUDENTS", JSON.stringify(STUDENTS));
+      localStorage.setItem("SPMB_STUDENTS", JSON.stringify(STUDENTS));
 
       if (!GAS_URL) {
         showModal("Terhapus (Lokal)", "Siswa berhasil dihapus dari penyimpanan sementara.", "success");
@@ -1317,7 +1277,6 @@
       });
     }
 
-    // 12. UTILITY LIBRARIES (MODAL & JSONP CLIENT)
     function callGasJsonp(action, extraParams, callbackFnName) {
       const callbackName = "gasCallback_" + Math.floor(Math.random() * 1000000);
       window[callbackName] = function(data) {
